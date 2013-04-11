@@ -31,22 +31,19 @@ public class gridGeneration
 			cols = rows = 8;
 			mines = 10;
 			grid = new int[rows][cols];
-			generateMines();
 		}
 		else if(gameMode == 2)
 		{
 			cols = rows = 16;
 			grid = new int[rows][cols];
 			mines = 40;
-			generateMines();
 		}
 		else if(gameMode == 3)
 		{
-			cols = 30;
-			rows = 16;
+			cols = 16;
+			rows = 30;
 			mines = 99;
 			grid = new int[rows][cols];
-			generateMines();
 		}
 		else
 		{
@@ -58,7 +55,7 @@ public class gridGeneration
 	public gridGeneration(int c, int r, int m)
 	{
 		int boxes = r * c;
-		if(m >= boxes || c == 0 || r == 0 || m == 0)
+		if(m + 9 >= boxes || c == 0 || r == 0 || m == 0)
 		{
 			System.out.println("invalid input");
 			System.exit(1);
@@ -67,7 +64,6 @@ public class gridGeneration
 		rows = r;
 		mines = m;
 		grid = new int[rows][cols];
-		generateMines();
 	}
 
 	/*
@@ -97,6 +93,29 @@ public class gridGeneration
 		generateConstants();
 	}
 
+	public void generateMines(int ro, int co)
+	{
+		Random rand = new Random();
+		emptyGrid();
+
+		for(int k = 0; k < mines; k++)
+		{
+			int r = rand.nextInt(rows);
+			int c = rand.nextInt(cols);
+
+			if(grid[r][c] == 0 && (Math.abs(r - ro) > 1 || Math.abs(c - co) > 1))
+			{
+				grid[r][c] = -1;
+			}
+			else
+			{
+				k--;
+			}
+		}
+
+		generateConstants();
+	}
+
 	private void emptyGrid()
 	{
 		for(int k = 0; k < rows; k++)
@@ -110,11 +129,12 @@ public class gridGeneration
 
 	private void generateConstants()
 	{
+		//center
 		for(int k = 1; k + 1 < rows; k++)
 		{
 			for(int a = 1; a + 1 < cols; a++)
 			{
-				if(grid[rows][cols] != -1)
+				if(grid[k][a] != -1)
 				{
 					int counter = 0;
 
@@ -135,14 +155,15 @@ public class gridGeneration
 						}
 					}
 
-					if(grid[rows][cols] == 0)
+					if(grid[k][a] == 0)
 					{
-						grid[rows][cols] = counter;
+						grid[k][a] = counter;
 					}
 				}
 			}
 		}
 
+		//horizontal border
 		for(int k = 1; k + 1 < cols; k++)
 		{
 			int counter1 = 0;
@@ -152,7 +173,7 @@ public class gridGeneration
 			{
 				for(int t = -1; t < 2; t++)
 				{
-					if(a != 0 && t != 0)
+					if(a != 0 || t != 0)
 					{
 						if(grid[a][k + t] == -1)
 						{
@@ -176,6 +197,7 @@ public class gridGeneration
 			}
 		}
 
+		//vertical border
 		for(int k = 1; k + 1 < rows; k++)
 		{
 			int counter1 = 0;
@@ -185,7 +207,7 @@ public class gridGeneration
 			{
 				for(int t = -1; t < 2; t++)
 				{
-					if(a != 0 && t != 0)
+					if(a != 0 || t != 0)
 					{
 						if(grid[k + t][a] == -1)
 						{
@@ -214,11 +236,12 @@ public class gridGeneration
 		int counter3 = 0;
 		int counter4 = 0;
 
+		//corners
 		for(int a = 0; a < 2; a++)
 		{
 			for(int t = 0; t < 2; t++)
 			{
-				if(a != 0 && t != 0)
+				if(a != 0 || t != 0)
 				{
 					if(grid[a][t] == -1)
 					{
@@ -255,6 +278,25 @@ public class gridGeneration
 		if(grid[rows - 1][cols - 1] == 0)
 		{
 			grid[rows - 1][cols - 1] = counter4;
+		}
+	}
+
+	public void printGrid()
+	{
+		for(int k = 0; k < rows; k++)
+		{
+			for(int a = 0; a < cols; a++)
+			{
+				if(grid[k][a] != -1)
+				{
+					System.out.print(" " + grid[k][a] + " ");
+				}
+				else
+				{
+					System.out.print(grid[k][a] + " ");
+				}
+			}
+			System.out.println();
 		}
 	}
 
