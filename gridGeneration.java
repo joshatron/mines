@@ -301,7 +301,7 @@ public class gridGeneration
 	}
 
 	public int[][] getGrid() {return grid;}
-	public int getrows() {return rows;}
-	public int getColoums() {return cols;}
+	public int getRows() {return rows;}
+	public int getCols() {return cols;}
 	public int getMines() {return mines;}
 }
