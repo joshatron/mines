@@ -129,155 +129,33 @@ public class gridGeneration
 
 	private void generateConstants()
 	{
-		//center
-		for(int k = 1; k + 1 < rows; k++)
+		for(int k = 0; k < rows; k++)
 		{
-			for(int a = 1; a + 1 < cols; a++)
+			for(int a = 0; a < cols; a++)
 			{
-				if(grid[k][a] != -1)
-				{
-					int counter = 0;
+				int counter = 0;
 
-					for(int t = -1; t < 2; t++)
+				for(int t = -1; t < 2; t++)
+				{
+					for(int i = -1; i < 2; i++)
 					{
-						for(int i = -1; i < 2; i++)
+						if((t != 0 || i != 0) && 
+						   (k + t >= 0 && k + t < rows) &&
+						   (a + i >= 0 && a + i < cols))
 						{
-							if(t == 0 && i == 0)
+							if(grid[k + t][a + i] == -1)
 							{
-							}
-							else
-							{
-								if(grid[k + t][a + i] == -1)
-								{
-									counter++;
-								}
+								counter++;
 							}
 						}
 					}
-
-					if(grid[k][a] == 0)
-					{
-						grid[k][a] = counter;
-					}
 				}
-			}
-		}
 
-		//horizontal border
-		for(int k = 1; k + 1 < cols; k++)
-		{
-			int counter1 = 0;
-			int counter2 = 0;
-
-			for(int a = 0; a < 2; a++)
-			{
-				for(int t = -1; t < 2; t++)
+				if(grid[k][a] == 0)
 				{
-					if(a != 0 || t != 0)
-					{
-						if(grid[a][k + t] == -1)
-						{
-							counter1++;
-						}
-						if(grid[rows - 1 - a][k + t] == -1)
-						{
-							counter2++;
-						}
-					}
+					grid[k][a] = counter;
 				}
 			}
-
-			if(grid[0][k] == 0)
-			{
-				grid[0][k] = counter1;
-			}
-			if(grid[rows - 1][k] == 0)
-			{
-				grid[rows - 1][k] = counter2;
-			}
-		}
-
-		//vertical border
-		for(int k = 1; k + 1 < rows; k++)
-		{
-			int counter1 = 0;
-			int counter2 = 0;
-
-			for(int a = 0; a < 2; a++)
-			{
-				for(int t = -1; t < 2; t++)
-				{
-					if(a != 0 || t != 0)
-					{
-						if(grid[k + t][a] == -1)
-						{
-							counter1++;
-						}
-						if(grid[k + t][cols - 1 - a] == -1)
-						{
-							counter2++;
-						}
-					}
-				}
-			}
-
-			if(grid[k][0] == 0)
-			{
-				grid[k][0] = counter1;
-			}
-			if(grid[k][cols - 1] == 0)
-			{
-				grid[k][cols - 1] = counter2;
-			}
-		}
-
-		int counter1 = 0;
-		int counter2 = 0;
-		int counter3 = 0;
-		int counter4 = 0;
-
-		//corners
-		for(int a = 0; a < 2; a++)
-		{
-			for(int t = 0; t < 2; t++)
-			{
-				if(a != 0 || t != 0)
-				{
-					if(grid[a][t] == -1)
-					{
-						counter1++;
-					}
-					if(grid[a][cols - 1 - t] == -1)
-					{
-						counter2++;
-					}
-					if(grid[rows - 1 - a][t] == -1)
-					{
-						counter3++;
-					}
-					if(grid[rows - 1 - a][cols - 1 - t] == -1)
-					{
-						counter4++;
-					}
-				}
-			}
-		}
-
-		if(grid[0][0] == 0)
-		{
-			grid[0][0] = counter1;
-		}
-		if(grid[0][cols - 1] == 0)
-		{
-			grid[0][cols - 1] = counter2;
-		}
-		if(grid[rows - 1][0] == 0)
-		{
-			grid[rows - 1][0] = counter3;
-		}
-		if(grid[rows - 1][cols - 1] == 0)
-		{
-			grid[rows - 1][cols - 1] = counter4;
 		}
 	}
 
