@@ -32,6 +32,8 @@ public class display extends Applet
 		}
 
 		setBackground(Color.blue);
+		addMouseListener(this);
+		addMouseMotionListener(this);
 	}
 
 	public void mouseEntered(MouseEvent e)
@@ -44,6 +46,37 @@ public class display extends Applet
 
 	public void mouseClicked(MouseEvent e)
 	{
+		mx = e.getX();
+		my = e.getY();
+		int row = (mx - 20) / 40;
+		int col = (my - 20) / 40;
+		int button = e.getButton();
+
+		if(row < rows && col < cols)
+		{
+			if(button == 1)
+			{
+				if(top[row][col] == 1)
+				{
+					top[row][col] = 0;
+				}
+			}
+
+			if(button == 3)
+			{
+				if(top[row][col] == 1)
+				{
+					top[row][col] = 2;
+				}
+				else if(top[row][col] == 2)
+				{
+					top[row][col] = 1;
+				}
+			}
+			repaint();
+		}
+
+		e.consume();
 	}
 
 	public void mousePressed(MouseEvent e)
@@ -56,6 +89,13 @@ public class display extends Applet
 
 	public void mouseMoved(MouseEvent e)
 	{
+		mx = e.getX();
+		my = e.getY();
+		int row = (mx - 20) / 40;
+		int col = (my - 20) / 40;
+
+	 	showStatus("Mouse at (" + row + "," + col + ")");
+		e.consume();	
 	}
 
 	public void mouseDragged(MouseEvent e)
@@ -70,17 +110,21 @@ public class display extends Applet
 			{
 				if(top[(k - startx) / length][(a - starty) / length] == 0)
 				{
-					g.setColor(new Color(30, 30, 30));
+					g.setColor(new Color(200, 200, 200));
 					g.fillRect(k, a, length, length);
+					g.setColor(Color.white);
+					g.drawRect(k, a, length - 1, length - 1);
 				}
 				if(top[(k - startx) / length][(a - starty) / length] == 1)
 				{
-					g.setColor(new Color(100, 100, 100));
+					g.setColor(new Color(150, 150, 150));
 					g.fillRect(k, a, length, length);
+					g.setColor(Color.black);
+					g.drawRect(k, a, length - 1, length - 1);
 				}
 				if(top[(k - startx) / length][(a - starty) / length] == 2)
 				{
-					g.setColor(new Color(255, 255, 255));
+					g.setColor(new Color(0, 0, 0));
 					g.fillRect(k, a, length, length);
 				}
 			}
