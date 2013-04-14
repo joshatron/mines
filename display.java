@@ -7,26 +7,17 @@ import java.applet.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class gameDisplay extends Applet
+public class display extends Applet
 		     implements MouseListener, MouseMotionListener
 {
 	int[][] bottom, top;
-	int length, textOffsetX, textOffsetY, startx, starty, mx, my, rows, cols, width, height, mines, gameMode;
+	int length, textOffsetx, textOffsety, startx, starty, mx, my, rows, cols, width, height, mines;
+	int gameMode, optionWidth, optionHeight, startX, startY, textOffsetX, textOffsetY, textHeight;	
 	boolean isFirst, isEnd, menu;
 	gridGeneration grid;
-	Image backBuffer;
-	Graphics backg;
-	Font gridFont;
-
-	public gameDisplay()
-	{
-		gameMode = 3;
-	}
-
-	public gameDisplay(int gm)
-	{
-		gameMode = gm;
-	}
+	Image gameBackBuffer, menuBackBuffer;
+	Graphics backg, backg2;
+	Font gridFont, menuFont;
 
 	public void init()
 	{
@@ -34,35 +25,36 @@ public class gameDisplay extends Applet
 		height = getSize().height;
 		isFirst = true;
 		isEnd = false;
-		grid = new gridGeneration(gameMode);
+		menu = true;
 		length = 40;
-		textOffsetX = 10;
-		textOffsetY = 30;
+		textOffsetx = 10;
+		textOffsety = 30;
 		startx = 200;
 		starty = 20;
-		rows = grid.getRows();
-		cols = grid.getCols();
-		mines = grid.getMines();
-		top = new int[rows][cols];
 		gridFont = new Font("Monospaced", Font.PLAIN, 30);
 
-		for(int k = 0; k < rows; k++)
-		{
-			for(int a = 0; a < cols; a++)
-			{
-				top[k][a] = 1;
-			}
-		}
+		startX = 50;
+		startY = 50;
+		optionWidth = 300;
+		optionHeight = 200;
+		textOffsetX = 30;
+		textOffsetY = 80;
+		textHeight = 50;	
+		menuFont = new Font("Monospaced", Font.PLAIN, 30);	
 
 		setBackground(Color.white);
 		addMouseListener(this);
 		addMouseMotionListener(this);
 
-		backBuffer = createImage(width, height);
-		backg = backBuffer.getGraphics();
+		gameBackBuffer = createImage(width, height);
+		backg = gameBackBuffer.getGraphics();
 		backg.setColor(Color.white);
 
-		updateBackBuffer();
+		menuBackBuffer = createImage(width, height);
+		backg2 = menuBackBuffer.getGraphics();
+		backg2.setColor(Color.white);
+
+		updateMenuBackBuffer();
 		repaint();
 	}
 
@@ -80,6 +72,30 @@ public class gameDisplay extends Applet
 		if(isEnd)
 		{
 			goToMenu();
+		}
+		else if(menu)
+		{
+			if(button == 1)
+			{
+				if(mx > startX && mx < startX + optionWidth && my > startY && my < startY + optionHeight)
+				{
+					gameMode = 1;
+				}
+				if(mx > startX + optionWidth && mx < startX + optionWidth * 2 && my > startY && my < startY + optionHeight)
+				{
+					gameMode = 2;
+				}
+				if(mx > startX && mx < startX + optionWidth && my > startY + optionHeight && my < startY + optionHeight * 2)
+				{
+					gameMode = 3;
+				}
+				if(mx > startX + optionWidth && mx < startX + optionWidth * 2 && my > startY + optionHeight && my < startY + optionHeight * 2)
+				{
+					gameMode = 0;
+				}
+	
+				goToGame();
+			}	
 		}
 		else if(isFirst)
 		{
@@ -129,10 +145,19 @@ public class gameDisplay extends Applet
 						mines++;
 					}
 				}
+
+				checkWin();
 			}
 		}
 	
-		updateBackBuffer();
+		if(menu)
+		{
+			updateMenuBackBuffer();
+		}
+		else
+		{
+			updateGameBackBuffer();
+		}
 		repaint();
 		e.consume();
 	}
@@ -141,23 +166,7 @@ public class gameDisplay extends Applet
 
 	public void mouseReleased(MouseEvent e){}
 
-	public void mouseMoved(MouseEvent e)
-	{
-		mx = e.getX();
-		my = e.getY();
-		int row = (mx - startx) / length;
-		int col = (my - starty) / length;
-
-		if(row < rows && row >= 0 && col < cols && col >= 0)
-		{
-	 		showStatus("Mouse at (" + row + "," + col + ")");
-		}
-		else
-		{
-			showStatus("Mouse off grid");
-		}
-		e.consume();	
-	}
+	public void mouseMoved(MouseEvent e){}
 
 	public void mouseDragged(MouseEvent e){}
 
@@ -177,14 +186,52 @@ public class gameDisplay extends Applet
 		}
 	}
 
+	public void checkWin()
+	{
+		int count = 0;
+
+		for(int k = 0; k < rows; k++)
+		{
+			for(int a = 0; a < cols; a++)
+			{
+				if(top[k][a] == 1 && bottom[k][a] != -1)
+				{
+					count++;
+				}
+			}
+		}
+
+		if(count == 0)
+		{
+			isEnd = true;
+		}
+	}
+
 	public void goToMenu()
 	{
 		menu = true;
+		isEnd = false;
+		isFirst = true;
 	}
 
 	public void goToGame()
 	{
 		menu = false;
+		grid = new gridGeneration(gameMode);
+		rows = grid.getRows();
+		cols = grid.getCols();
+		mines = grid.getMines();
+		top = new int[rows][cols];
+		backg.setColor(Color.white);
+		backg.fillRect(0, 0, width, height);
+
+		for(int k = 0; k < rows; k++)
+		{
+			for(int a = 0; a < cols; a++)
+			{
+				top[k][a] = 1;
+			}
+		}
 	}
 
 	private void expandZeros()
@@ -260,7 +307,7 @@ public class gameDisplay extends Applet
 		expandZeros();
 	}
 
-	private void updateBackBuffer()
+	private void updateGameBackBuffer()
 	{
 		backg.setColor(Color.white);
 		backg.fillRect(0, 0, startx, starty + length);
@@ -316,11 +363,11 @@ public class gameDisplay extends Applet
 					}
 					if(bottom[(k - startx) / length][(a - starty) / length] > 0)
 					{
-						backg.drawString("" + bottom[(k - startx) / length][(a - starty) / length], k + textOffsetX, a + textOffsetY);
+						backg.drawString("" + bottom[(k - startx) / length][(a - starty) / length], k + textOffsetx, a + textOffsety);
 					}
 					else if(bottom[(k - startx) / length][(a - starty) / length] == -1)
 					{
-						backg.drawString("!", k + textOffsetX, a + textOffsetY);
+						backg.drawString("!", k + textOffsetx, a + textOffsety);
 					}
 				}
 				if(top[(k - startx) / length][(a - starty) / length] == 1)
@@ -336,17 +383,45 @@ public class gameDisplay extends Applet
 					backg.fillRect(k, a, length, length);
 					backg.setFont(gridFont);
 					backg.setColor(Color.white);
-					backg.drawString("!", k + textOffsetX, a + textOffsetY);
+					backg.drawString("!", k + textOffsetx, a + textOffsety);
 				}
 			}
 		}
 	}
 
-	
-
+	public void updateMenuBackBuffer()
+	{
+		backg2.setColor(Color.lightGray);
+		backg2.fillRect(startX, startY, optionWidth * 2, optionHeight * 2);
+		backg2.setColor(Color.black);
+		backg2.drawRect(startX, startY, optionWidth - 1, optionHeight - 1);
+		backg2.drawRect(startX + optionWidth, startY, optionWidth - 1, optionHeight - 1);
+		backg2.drawRect(startX, startY + optionHeight, optionWidth - 1, optionHeight - 1);
+		backg2.drawRect(startX + optionWidth, startY + optionHeight, optionWidth - 1, optionHeight - 1);
+		backg2.setFont(menuFont);
+		backg2.setColor(Color.blue);
+		backg2.drawString("Easy", startX + textOffsetX, startY + textOffsetY);
+		backg2.drawString("8x8 10 mines", startX + textOffsetX, startY + textOffsetY + textHeight);
+		backg2.setColor(Color.green);
+		backg2.drawString("Medium", startX + textOffsetX + optionWidth, startY + textOffsetY);
+		backg2.drawString("16x16 40 mines", startX + textOffsetX + optionWidth, startY + textOffsetY + textHeight);
+		backg2.setColor(Color.red);
+		backg2.drawString("Hard", startX + textOffsetX, startY + textOffsetY + optionHeight);
+		backg2.drawString("30x16 99 mines", startX + textOffsetX, startY + textOffsetY + textHeight + optionHeight);
+		backg2.setColor(Color.black);
+		backg2.drawString("quit", startX + textOffsetX + optionWidth, startY + textOffsetY + textHeight / 2 + optionHeight);
+	}
+		
 	public void update(Graphics g)
 	{
-		g.drawImage(backBuffer, 0, 0, this);
+		if(menu)
+		{
+			g.drawImage(menuBackBuffer, 0, 0, this);
+		}
+		else
+		{
+			g.drawImage(gameBackBuffer, 0, 0, this);
+		}
 	}
 
 	public void paint(Graphics g)

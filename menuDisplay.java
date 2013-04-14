@@ -83,6 +83,10 @@ public class menuDisplay extends Applet
 
 	public void goToGame()
 	{
+		if(gameMode == 0)
+		{
+			int a = 1 / 0;
+		}
 	}
 
 	public void updateBackBuffer()
