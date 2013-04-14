@@ -80,21 +80,19 @@ public class display extends Applet
 				if(mx > startX && mx < startX + optionWidth && my > startY && my < startY + optionHeight)
 				{
 					gameMode = 1;
+					goToGame();
 				}
 				if(mx > startX + optionWidth && mx < startX + optionWidth * 2 && my > startY && my < startY + optionHeight)
 				{
 					gameMode = 2;
+					goToGame();
 				}
 				if(mx > startX && mx < startX + optionWidth && my > startY + optionHeight && my < startY + optionHeight * 2)
 				{
 					gameMode = 3;
-				}
-				if(mx > startX + optionWidth && mx < startX + optionWidth * 2 && my > startY + optionHeight && my < startY + optionHeight * 2)
-				{
-					gameMode = 0;
+					goToGame();
 				}
 	
-				goToGame();
 			}	
 		}
 		else if(isFirst)
@@ -399,17 +397,18 @@ public class display extends Applet
 		backg2.drawRect(startX, startY + optionHeight, optionWidth - 1, optionHeight - 1);
 		backg2.drawRect(startX + optionWidth, startY + optionHeight, optionWidth - 1, optionHeight - 1);
 		backg2.setFont(menuFont);
+
 		backg2.setColor(Color.blue);
 		backg2.drawString("Easy", startX + textOffsetX, startY + textOffsetY);
 		backg2.drawString("8x8 10 mines", startX + textOffsetX, startY + textOffsetY + textHeight);
+
 		backg2.setColor(Color.green);
 		backg2.drawString("Medium", startX + textOffsetX + optionWidth, startY + textOffsetY);
 		backg2.drawString("16x16 40 mines", startX + textOffsetX + optionWidth, startY + textOffsetY + textHeight);
+
 		backg2.setColor(Color.red);
 		backg2.drawString("Hard", startX + textOffsetX, startY + textOffsetY + optionHeight);
 		backg2.drawString("30x16 99 mines", startX + textOffsetX, startY + textOffsetY + textHeight + optionHeight);
-		backg2.setColor(Color.black);
-		backg2.drawString("quit", startX + textOffsetX + optionWidth, startY + textOffsetY + textHeight / 2 + optionHeight);
 	}
 		
 	public void update(Graphics g)
