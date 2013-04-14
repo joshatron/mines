@@ -11,8 +11,7 @@ public class display extends Applet
 		     implements MouseListener, MouseMotionListener
 {
 	int[][] bottom, top;
-	int width, height;
-	int length, textOffsetX, textOffsetY, startx, starty, mx, my, rows, cols;
+	int length, textOffsetX, textOffsetY, startx, starty, mx, my, rows, cols, width, height, mines;
 	boolean isFirst;
 	gridGeneration grid;
 	Image backBuffer;
@@ -28,9 +27,11 @@ public class display extends Applet
 		length = 40;
 		textOffsetX = 10;
 		textOffsetY = 30;
-		startx = starty = 20;
+		startx = 200;
+		starty = 20;
 		rows = grid.getRows();
 		cols = grid.getCols();
+		mines = grid.getMines();
 		top = new int[rows][cols];
 		gridFont = new Font("Monospaced", Font.PLAIN, 30);
 
@@ -42,7 +43,7 @@ public class display extends Applet
 			}
 		}
 
-		setBackground(Color.blue);
+		setBackground(Color.white);
 		addMouseListener(this);
 		addMouseMotionListener(this);
 
@@ -62,8 +63,8 @@ public class display extends Applet
 	{
 		mx = e.getX();
 		my = e.getY();
-		int row = (mx - 20) / 40;
-		int col = (my - 20) / 40;
+		int row = (mx - startx) / length;
+		int col = (my - starty) / length;
 		int button = e.getButton();
 		if(isFirst)
 		{
@@ -105,10 +106,12 @@ public class display extends Applet
 					if(top[row][col] == 1)
 					{
 						top[row][col] = 2;
+						mines--;
 					}
 					else if(top[row][col] == 2)
 					{
 						top[row][col] = 1;
+						mines++;
 					}
 				}
 			}
@@ -127,8 +130,8 @@ public class display extends Applet
 	{
 		mx = e.getX();
 		my = e.getY();
-		int row = (mx - 20) / 40;
-		int col = (my - 20) / 40;
+		int row = (mx - startx) / length;
+		int col = (my - starty) / length;
 
 		if(row < rows && row >= 0 && col < cols && col >= 0)
 		{
@@ -195,7 +198,7 @@ public class display extends Applet
 		{
 			for(int a = -1; a < 2; a++)
 			{
-				if(row + k >= 0 && row + k < rows && col + a >= 0 && col + a < cols && bottom[row + k][col + a] == -1)
+				if(row + k >= 0 && row + k < rows && col + a >= 0 && col + a < cols && top[row + k][col + a] == 2 && bottom[row + k][col + a] == -1)
 				{
 					count--;
 				}
@@ -228,6 +231,11 @@ public class display extends Applet
 
 	private void updateBackBuffer()
 	{
+		backg.setColor(Color.white);
+		backg.fillRect(0, 0, startx, starty + length);
+		backg.setColor(Color.black);
+		backg.setFont(gridFont);
+		backg.drawString("Mines:\n" + mines, 5, starty + length);
 		for(int k = startx; k - startx < rows * length; k += length)
 		{
 			for(int a = starty; a - starty < cols * length; a += length)
