@@ -12,23 +12,27 @@ public class display extends Applet
 {
 	int[][] bottom, top;
 	int width, height;
-	int length, startx, starty, mx, my, rows, cols;
+	int length, textOffsetX, textOffsetY, startx, starty, mx, my, rows, cols;
 	boolean isFirst;
 	gridGeneration grid;
 	Image backBuffer;
 	Graphics backg;
+	Font gridFont;
 
 	public void init()
 	{
 		width = getSize().width;
 		height = getSize().height;
 		isFirst = true;
-		grid = new gridGeneration(1);
+		grid = new gridGeneration(3);
 		length = 40;
+		textOffsetX = 10;
+		textOffsetY = 30;
 		startx = starty = 20;
 		rows = grid.getRows();
 		cols = grid.getCols();
 		top = new int[rows][cols];
+		gridFont = new Font("Monospaced", Font.PLAIN, 30);
 
 		for(int k = 0; k < rows; k++)
 		{
@@ -85,6 +89,14 @@ public class display extends Applet
 						{
 							expandZeros();
 						}
+						if(bottom[row][col] == -1)
+						{
+							displayEndGame();
+						}
+					}
+					if(top[row][col] == 0)
+					{
+						expandConstant();
 					}
 				}
 	
@@ -131,6 +143,11 @@ public class display extends Applet
 
 	public void mouseDragged(MouseEvent e){}
 
+	public void displayEndGame()
+	{
+		System.exit(0);
+	}
+
 	private void expandZeros()
 	{
 		int count = 0;
@@ -165,6 +182,22 @@ public class display extends Applet
 		}
 	}
 
+	private void expandConstants(int row, int col)
+	{
+		int count = bottom[row][col];
+
+		for(int k = -1; k < 2; k++)
+		{
+			for(int a = -1; a < 2; a++)
+			{
+				if(row + k >= 0 && row + k < rows && col + a >= 0 && col + a < cols && bottom[row + k][col + a] == -1)
+				{
+					count--;
+				}
+			}
+		}
+	}
+
 	private void updateBackBuffer()
 	{
 		for(int k = startx; k - startx < rows * length; k += length)
@@ -177,8 +210,51 @@ public class display extends Applet
 					backg.fillRect(k, a, length, length);
 					backg.setColor(Color.white);
 					backg.drawRect(k, a, length - 1, length - 1);
-					backg.setColor(Color.black);
-					backg.drawString("" + bottom[(k - startx) / length][(a - starty) / length], k, a + length);
+					backg.setFont(gridFont);
+					if(bottom[(k - startx) / length][(a - starty) / length] == -1)
+					{
+						backg.setColor(new Color(0, 0, 0));
+					}
+					else if(bottom[(k - startx) / length][(a - starty) / length] == 1)
+					{
+						backg.setColor(new Color(0, 0, 255));
+					}
+					else if(bottom[(k - startx) / length][(a - starty) / length] == 2)
+					{
+						backg.setColor(new Color(0, 255, 0));
+					}
+					else if(bottom[(k - startx) / length][(a - starty) / length] == 3)
+					{
+						backg.setColor(new Color(255, 0, 0));
+					}
+					else if(bottom[(k - startx) / length][(a - starty) / length] == 4)
+					{
+						backg.setColor(new Color(150, 150, 255));
+					}
+					else if(bottom[(k - startx) / length][(a - starty) / length] == 5)
+					{
+						backg.setColor(new Color(100, 0, 0));
+					}
+					else if(bottom[(k - startx) / length][(a - starty) / length] == 6)
+					{
+						backg.setColor(new Color(150, 150, 150));
+					}
+					else if(bottom[(k - startx) / length][(a - starty) / length] == 7)
+					{
+						backg.setColor(new Color(0, 50, 0));
+					}
+					else if(bottom[(k - startx) / length][(a - starty) / length] == 8)
+					{
+						backg.setColor(new Color(255, 0, 255));
+					}
+					if(bottom[(k - startx) / length][(a - starty) / length] > 0)
+					{
+						backg.drawString("" + bottom[(k - startx) / length][(a - starty) / length], k + textOffsetX, a + textOffsetY);
+					}
+					else if(bottom[(k - startx) / length][(a - starty) / length] == -1)
+					{
+						backg.drawString("!", k + textOffsetX, a + textOffsetY);
+					}
 				}
 				if(top[(k - startx) / length][(a - starty) / length] == 1)
 				{
@@ -191,6 +267,9 @@ public class display extends Applet
 				{
 					backg.setColor(new Color(0, 0, 0));
 					backg.fillRect(k, a, length, length);
+					backg.setFont(gridFont);
+					backg.setColor(Color.white);
+					backg.drawString("!", k + textOffsetX, a + textOffsetY);
 				}
 			}
 		}
