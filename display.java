@@ -13,6 +13,7 @@ public class display extends Applet
 	int[][] bottom, top;
 	int width, height;
 	int length, startx, starty, mx, my, rows, cols;
+	boolean isFirst;
 	gridGeneration grid;
 	Image backBuffer;
 	Graphics backg;
@@ -21,6 +22,7 @@ public class display extends Applet
 	{
 		width = getSize().width;
 		height = getSize().height;
+		isFirst = true;
 		grid = new gridGeneration(1);
 		length = 40;
 		startx = starty = 20;
@@ -48,13 +50,9 @@ public class display extends Applet
 		repaint();
 	}
 
-	public void mouseEntered(MouseEvent e)
-	{
-	}
+	public void mouseEntered(MouseEvent e){}
 
-	public void mouseExited(MouseEvent e)
-	{
-	}
+	public void mouseExited(MouseEvent e){}
 
 	public void mouseClicked(MouseEvent e)
 	{
@@ -63,42 +61,55 @@ public class display extends Applet
 		int row = (mx - 20) / 40;
 		int col = (my - 20) / 40;
 		int button = e.getButton();
-
-		if(row < rows && col < cols)
+		if(isFirst)
 		{
-			if(button == 1)
+			if(row < rows && row >= 0 && col < cols && col >= 0)
 			{
-				if(top[row][col] == 1)
-				{
-					top[row][col] = 0;
-				}
+				grid.generateMines(row, col);
+				bottom = grid.getGrid();
+				top[row][col] = 0;
+				isFirst = false;
+				expandZeros();
 			}
-
-			if(button == 3)
+		}
+		else
+		{
+			if(row < rows && row >= 0 && col < cols && col >= 0)
 			{
-				if(top[row][col] == 1)
+				if(button == 1)
 				{
-					top[row][col] = 2;
+					if(top[row][col] == 1)
+					{
+						top[row][col] = 0;
+						if(bottom[row][col] == 0)
+						{
+							expandZeros();
+						}
+					}
 				}
-				else if(top[row][col] == 2)
+	
+				if(button == 3)
 				{
-					top[row][col] = 1;
+					if(top[row][col] == 1)
+					{
+						top[row][col] = 2;
+					}
+					else if(top[row][col] == 2)
+					{
+						top[row][col] = 1;
+					}
 				}
 			}
 		}
-
+	
 		updateBackBuffer();
 		repaint();
 		e.consume();
 	}
 
-	public void mousePressed(MouseEvent e)
-	{
-	}
+	public void mousePressed(MouseEvent e){}
 
-	public void mouseReleased(MouseEvent e)
-	{
-	}
+	public void mouseReleased(MouseEvent e){}
 
 	public void mouseMoved(MouseEvent e)
 	{
@@ -111,11 +122,47 @@ public class display extends Applet
 		{
 	 		showStatus("Mouse at (" + row + "," + col + ")");
 		}
+		else
+		{
+			showStatus("Mouse off grid");
+		}
 		e.consume();	
 	}
 
-	public void mouseDragged(MouseEvent e)
+	public void mouseDragged(MouseEvent e){}
+
+	private void expandZeros()
 	{
+		int count = 0;
+
+		for(int k = 0; k < rows; k++)
+		{
+			for(int a = 0; a < cols; a++)
+			{
+				if(top[k][a] == 0 && bottom[k][a] == 0)
+				{
+					for(int t = -1; t < 2; t++)
+					{
+						for(int i = -1; i < 2; i++)
+						{
+							if(k + t >= 0 && k + t < rows && a + i >= 0 && a + i < cols && top[k + t][a + i] != 0)
+							{
+								top[k + t][a + i] = 0;
+								if(bottom[k + t][a + i] == 0)
+								{
+									count++;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		if(count != 0)
+		{
+			expandZeros();
+		}
 	}
 
 	private void updateBackBuffer()
@@ -130,6 +177,8 @@ public class display extends Applet
 					backg.fillRect(k, a, length, length);
 					backg.setColor(Color.white);
 					backg.drawRect(k, a, length - 1, length - 1);
+					backg.setColor(Color.black);
+					backg.drawString("" + bottom[(k - startx) / length][(a - starty) / length], k, a + length);
 				}
 				if(top[(k - startx) / length][(a - starty) / length] == 1)
 				{
