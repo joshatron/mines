@@ -89,14 +89,14 @@ public class display extends Applet
 						{
 							expandZeros();
 						}
-						if(bottom[row][col] == -1)
+						else if(bottom[row][col] == -1)
 						{
 							displayEndGame();
 						}
 					}
-					if(top[row][col] == 0)
+					else if(top[row][col] == 0)
 					{
-						expandConstant();
+						expandConstant(row, col);
 					}
 				}
 	
@@ -145,7 +145,12 @@ public class display extends Applet
 
 	public void displayEndGame()
 	{
-		System.exit(0);
+		Image img= createImage(width, height);
+		Graphics g2 = img.getGraphics();
+		g2.setColor(Color.white);
+
+		backBuffer = img;
+
 	}
 
 	private void expandZeros()
@@ -182,7 +187,7 @@ public class display extends Applet
 		}
 	}
 
-	private void expandConstants(int row, int col)
+	private void expandConstant(int row, int col)
 	{
 		int count = bottom[row][col];
 
@@ -196,6 +201,29 @@ public class display extends Applet
 				}
 			}
 		}
+
+		if(count == 0)
+		{
+			for(int k = -1; k < 2; k++)
+			{
+				for(int a = -1; a < 2; a++)
+				{
+					if(row + k >= 0 && row + k < rows && col + a >= 0 && col + a < cols && top[row + k][col + a] == 1)
+					{
+						if(bottom[row + k][col + a] == -1)
+						{
+							displayEndGame();
+						}
+						else
+						{
+							top[row + k][col + a] = 0;
+						}
+					}
+				}
+			}
+		}
+
+		expandZeros();
 	}
 
 	private void updateBackBuffer()
