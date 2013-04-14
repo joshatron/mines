@@ -11,11 +11,16 @@ public class display extends Applet
 		     implements MouseListener, MouseMotionListener
 {
 	int[][] bottom, top;
+	int width, height;
 	int length, startx, starty, mx, my, rows, cols;
 	gridGeneration grid;
+	Image backBuffer;
+	Graphics backg;
 
 	public void init()
 	{
+		width = getSize().width;
+		height = getSize().height;
 		grid = new gridGeneration(1);
 		length = 40;
 		startx = starty = 20;
@@ -34,6 +39,10 @@ public class display extends Applet
 		setBackground(Color.blue);
 		addMouseListener(this);
 		addMouseMotionListener(this);
+
+		backBuffer = createImage(width, height);
+		backg = backBuffer.getGraphics();
+		backg.setColor(Color.white);
 	}
 
 	public void mouseEntered(MouseEvent e)
@@ -73,9 +82,10 @@ public class display extends Applet
 					top[row][col] = 1;
 				}
 			}
-			repaint();
 		}
 
+		updateBackBuffer();
+		repaint();
 		e.consume();
 	}
 
@@ -102,7 +112,7 @@ public class display extends Applet
 	{
 	}
 
-	public void paint(Graphics g)
+	private void updateBackBuffer()
 	{
 		for(int k = startx; k - startx < rows * length; k += length)
 		{
@@ -110,24 +120,34 @@ public class display extends Applet
 			{
 				if(top[(k - startx) / length][(a - starty) / length] == 0)
 				{
-					g.setColor(new Color(200, 200, 200));
-					g.fillRect(k, a, length, length);
-					g.setColor(Color.white);
-					g.drawRect(k, a, length - 1, length - 1);
+					backg.setColor(new Color(200, 200, 200));
+					backg.fillRect(k, a, length, length);
+					backg.setColor(Color.white);
+					backg.drawRect(k, a, length - 1, length - 1);
 				}
 				if(top[(k - startx) / length][(a - starty) / length] == 1)
 				{
-					g.setColor(new Color(150, 150, 150));
-					g.fillRect(k, a, length, length);
-					g.setColor(Color.black);
-					g.drawRect(k, a, length - 1, length - 1);
+					backg.setColor(new Color(150, 150, 150));
+					backg.fillRect(k, a, length, length);
+					backg.setColor(Color.black);
+					backg.drawRect(k, a, length - 1, length - 1);
 				}
 				if(top[(k - startx) / length][(a - starty) / length] == 2)
 				{
-					g.setColor(new Color(0, 0, 0));
-					g.fillRect(k, a, length, length);
+					backg.setColor(new Color(0, 0, 0));
+					backg.fillRect(k, a, length, length);
 				}
 			}
 		}
+	}
+
+	public void update(Graphics g)
+	{
+		g.drawImage(backBuffer, 0, 0, this);
+	}
+
+	public void paint(Graphics g)
+	{
+		update(g);
 	}
 }
