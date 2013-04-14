@@ -43,6 +43,9 @@ public class display extends Applet
 		backBuffer = createImage(width, height);
 		backg = backBuffer.getGraphics();
 		backg.setColor(Color.white);
+
+		updateBackBuffer();
+		repaint();
 	}
 
 	public void mouseEntered(MouseEvent e)
@@ -104,7 +107,10 @@ public class display extends Applet
 		int row = (mx - 20) / 40;
 		int col = (my - 20) / 40;
 
-	 	showStatus("Mouse at (" + row + "," + col + ")");
+		if(row < rows && row >= 0 && col < cols && col >= 0)
+		{
+	 		showStatus("Mouse at (" + row + "," + col + ")");
+		}
 		e.consume();	
 	}
 
