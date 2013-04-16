@@ -8,16 +8,16 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class display extends Applet
-		     implements MouseListener, MouseMotionListener
+		     implements MouseListener, MouseMotionListener, KeyListener
 {
 	int[][] bottom, top;
-	int length, textOffsetx, textOffsety, startx, starty, mx, my, rows, cols, width, height, mines;
-	int gameMode, optionWidth, optionHeight, startX, startY, textOffsetX, textOffsetY, textHeight;	
+	int length, textOffsetx, textOffsety, startx, starty, mx, my, rows, cols, width, height, mines, gFontSize;
+	int gameMode, optionWidth, optionHeight, startX, startY, textOffsetX, textOffsetY, textHeight, mFontSize;
 	boolean isFirst, isEnd, menu;
 	gridGeneration grid;
 	Image gameBackBuffer, menuBackBuffer;
 	Graphics backg, backg2;
-	Font gridFont, menuFont;
+	Font gridFont, menuFont, mineFont;
 
 	public void init()
 	{
@@ -31,7 +31,9 @@ public class display extends Applet
 		textOffsety = 30;
 		startx = 200;
 		starty = 20;
-		gridFont = new Font("Monospaced", Font.PLAIN, 30);
+		gFontSize = 30;
+		gridFont = new Font("Monospaced", Font.PLAIN, gFontSize);
+		mineFont = new Font("Monospaced", Font.PLAIN, gFontSize);
 
 		startX = 50;
 		startY = 50;
@@ -39,12 +41,14 @@ public class display extends Applet
 		optionHeight = 200;
 		textOffsetX = 30;
 		textOffsetY = 80;
-		textHeight = 50;	
-		menuFont = new Font("Monospaced", Font.PLAIN, 30);	
+		textHeight = 50;
+		mFontSize = 30;
+		menuFont = new Font("Monospaced", Font.PLAIN, mFontSize);	
 
 		setBackground(Color.white);
 		addMouseListener(this);
 		addMouseMotionListener(this);
+		addKeyListener(this);
 
 		gameBackBuffer = createImage(width, height);
 		backg = gameBackBuffer.getGraphics();
@@ -167,6 +171,72 @@ public class display extends Applet
 	public void mouseMoved(MouseEvent e){}
 
 	public void mouseDragged(MouseEvent e){}
+
+	public void keyPressed(KeyEvent e){}
+
+	public void keyReleased(KeyEvent e){}
+
+	public void keyTyped(KeyEvent e)
+	{
+		char c = e.getKeyChar();
+
+		if(c != KeyEvent.CHAR_UNDEFINED)
+		{
+			if(!menu)
+			{
+				if(c == 'r')
+				{
+					if(length > 20)
+					{
+						length -= 10;
+						gFontSize -= 10;
+						textOffsetx -= 1;
+						textOffsety -= 9;
+						gridFont = new Font("Monospace", Font.PLAIN, gFontSize);
+						backg.setColor(Color.white);
+						backg.fillRect(0, 0, width, height);
+						updateGameBackBuffer();
+					}
+				}
+				else if(c == 'e')
+				{
+					length += 10;
+					gFontSize += 10;
+					textOffsetx += 1;
+					textOffsety += 9;
+					gridFont = new Font("Monospace", Font.PLAIN, gFontSize);
+					backg.setColor(Color.white);
+					backg.fillRect(0, 0, width, height);
+					updateGameBackBuffer();
+				}
+				else if(c == 'q')
+				{
+					goToMenu();
+				}
+			}
+			else
+			{
+				if(c == '1')
+				{
+					gameMode = 1;
+					goToGame();
+				}
+				else if(c == '2')
+				{
+					gameMode = 2;
+					goToGame();
+				}
+				else if(c == '3')
+				{
+					gameMode = 3;
+					goToGame();
+				}
+			}
+		}
+
+		repaint();
+		e.consume();
+	}
 
 	public void displayEndGame()
 	{
@@ -310,7 +380,7 @@ public class display extends Applet
 		backg.setColor(Color.white);
 		backg.fillRect(0, 0, startx, starty + length);
 		backg.setColor(Color.red);
-		backg.setFont(gridFont);
+		backg.setFont(mineFont);
 		backg.drawString("Mines:\n" + mines, 5, starty + length);
 		for(int k = startx; k - startx < rows * length; k += length)
 		{
