@@ -250,6 +250,10 @@ public class display extends Applet
 				{
 					top[k][a] = 0;
 				}
+				else if(top[k][a] == 2 && bottom[k][a] != -1)
+				{
+					top[k][a] = 3;
+				}
 			}
 		}
 	}
@@ -300,6 +304,7 @@ public class display extends Applet
 				top[k][a] = 1;
 			}
 		}
+		updateGameBackBuffer();
 	}
 
 	private void expandZeros()
@@ -451,7 +456,15 @@ public class display extends Applet
 					backg.fillRect(k, a, length, length);
 					backg.setFont(gridFont);
 					backg.setColor(Color.white);
-					backg.drawString("!", k + textOffsetx, a + textOffsety);
+					backg.drawString("!", k + textOffsetx + gFontSize / 10 - 1, a + textOffsety);
+				}
+				if(top[(k - startx) / length][(a - starty) / length] == 3)
+				{
+					backg.setColor(new Color(0, 0, 0));
+					backg.fillRect(k, a, length, length);
+					backg.setFont(gridFont);
+					backg.setColor(Color.white);
+					backg.drawString("F", k + textOffsetx, a + textOffsety);
 				}
 			}
 		}
