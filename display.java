@@ -13,7 +13,7 @@ public class display extends Applet
 	int[][] bottom, top;
 	int length, textOffsetx, textOffsety, startx, starty, mx, my, rows, cols, width, height, mines, gFontSize;
 	int gameMode, optionWidth, optionHeight, startX, startY, textOffsetX, textOffsetY, textHeight, mFontSize;
-	boolean isFirst, isEnd, menu;
+	boolean isFirst, isEnd, menu, didWin;
 	gridGeneration grid;
 	Image gameBackBuffer, menuBackBuffer;
 	Graphics backg, backg2;
@@ -25,12 +25,13 @@ public class display extends Applet
 		height = getSize().height;
 		isFirst = true;
 		isEnd = false;
+		didWin = false;
 		menu = true;
 		length = 40;
 		textOffsetx = 10;
 		textOffsety = 30;
 		startx = 200;
-		starty = 20;
+		starty = 35;
 		gFontSize = 30;
 		gridFont = new Font("Monospaced", Font.PLAIN, gFontSize);
 		mineFont = new Font("Monospaced", Font.PLAIN, gFontSize);
@@ -276,6 +277,7 @@ public class display extends Applet
 		if(count == 0)
 		{
 			isEnd = true;
+			didWin = true;
 		}
 	}
 
@@ -284,6 +286,7 @@ public class display extends Applet
 		menu = true;
 		isEnd = false;
 		isFirst = true;
+		didWin = false;
 	}
 
 	public void goToGame()
@@ -408,7 +411,7 @@ public class display extends Applet
 					}
 					else if(bottom[(k - startx) / length][(a - starty) / length] == 2)
 					{
-						backg.setColor(new Color(0, 255, 0));
+						backg.setColor(new Color(0, 150, 0));
 					}
 					else if(bottom[(k - startx) / length][(a - starty) / length] == 3)
 					{
@@ -468,6 +471,30 @@ public class display extends Applet
 				}
 			}
 		}
+
+		if(isEnd)
+		{
+			backg.setFont(new Font("Arial", Font.PLAIN, 25));
+			FontMetrics fm2 = backg.getFontMetrics();
+			String go = "Click anywhere on the window to go back to the menu.";
+			int x = startx;
+			int y = fm2.getHeight() - 1;
+			
+			if(didWin)
+			{
+				String win = "Congratulations!";
+
+				backg.setColor(new Color(255, 69, 0));
+				backg.drawString(win + " " + go, x, y);
+			}
+			else
+			{
+				String lose = "Sorry, but you lost.";
+
+				backg.setColor(new Color(255, 69, 0));
+				backg.drawString(lose + " " + go, x, y);
+			}
+		}
 	}
 
 	public void updateMenuBackBuffer()
@@ -481,15 +508,15 @@ public class display extends Applet
 		backg2.drawRect(startX + optionWidth, startY + optionHeight, optionWidth - 1, optionHeight - 1);
 		backg2.setFont(menuFont);
 
-		backg2.setColor(Color.blue);
+		backg2.setColor(new Color(0, 0, 255));
 		backg2.drawString("Easy", startX + textOffsetX, startY + textOffsetY);
 		backg2.drawString("8x8 10 mines", startX + textOffsetX, startY + textOffsetY + textHeight);
 
-		backg2.setColor(Color.green);
+		backg2.setColor(new Color(0, 150, 0));
 		backg2.drawString("Medium", startX + textOffsetX + optionWidth, startY + textOffsetY);
 		backg2.drawString("16x16 40 mines", startX + textOffsetX + optionWidth, startY + textOffsetY + textHeight);
 
-		backg2.setColor(Color.red);
+		backg2.setColor(new Color(255, 0, 0));
 		backg2.drawString("Hard", startX + textOffsetX, startY + textOffsetY + optionHeight);
 		backg2.drawString("30x16 99 mines", startX + textOffsetX, startY + textOffsetY + textHeight + optionHeight);
 	}
