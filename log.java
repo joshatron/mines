@@ -6,9 +6,9 @@
 	format of file is:
 
 	number of players
-	name1,games played,games won,best score,second score,third score,best score,second score,third score,best score,second score,third score,number of favorite configuration
-	name2,games played,games won,best score,second score,third score,best score,second score,third score,best score,second score,third score,number of favorite configuration
-	name3,games played,games won,best score,second score,third score,best score,second score,third score,best score,second score,third score,number of favorite configuration
+	name1,games played1,games played2,games played3,games won,best score1,best score2,best score3,number of favorite configuration
+	name2,games played1,games played2,games played3,games won,best score1,best score2,best score3,number of favorite configuration
+	name3,games played1,games played2,games played3,games won,best score1,best score2,best score3,number of favorite configuration
 	...
 
 	The three groups of scores are each of the different game types in ascending order.
@@ -23,8 +23,9 @@ public class log
 	BufferedReader in;
 	PrintWriter out;
 	String file;
+	String[] names;
 	int p;
-	player[] people;
+	personNode first, current, last;
 
 	public log() throws IOException
 	{
@@ -32,7 +33,10 @@ public class log
 		in = new BufferedReader(new FileReader(file));
 		out = new PrintWriter(new BufferedWriter(new FileWriter(file)));
 		p = Integer.parseInt(in.readLine());
-		people = new player[p];
+		first = new personNode();
+		current = first;
+		names = new String[p];
+		readFile();
 	}
 
 	public log(String f) throws IOException
@@ -41,14 +45,99 @@ public class log
 		in = new BufferedReader(new FileReader(file));
 		out = new PrintWriter(new BufferedWriter(new FileWriter(file)));
 		p = Integer.parseInt(in.readLine());
-		people = new player[p];
+		first = new personNode();
+		current = first;
+		names = new String[p];
+		readFile();
 	}
 
 	public void readFile() throws IOException
 	{
 		for(int k = 0; k < p; k++)
 		{
-			//create player and store in people
+			String per = in.readLine();
+			StringTokenizer token = new StringTokenizer(per, ",");
+			String name = token.nextToken();
+			player p1 = new player(name,Integer.parseInt(token.nextToken()),Integer.parseInt(token.nextToken()),Integer.parseInt(token.nextToken()),Integer.parseInt(token.nextToken()),
+					       Integer.parseInt(token.nextToken()),Integer.parseInt(token.nextToken()),Integer.parseInt(token.nextToken()),Integer.parseInt(token.nextToken()));
+			names[k] = name;
+			current.setPerson(p1);
+			current.next = new personNode();
+			current = current.next;
 		}
+
+		last = current;
+	}
+
+	public void addStats(player p1)
+	{
+		boolean hasName = false;
+		String name = p1.getName();
+
+		for(int k = 0; k < p; k++)
+		{
+			if(names[k].equals(name))
+			{
+				hasName = true;
+			}
+		}
+
+		if(hasName)
+		{
+			
+		}
+		else
+		{
+			last.setPerson(p1);
+			last.next = new personNode();
+			last = last.next;
+			p++;
+		}
+	}
+
+	public String toString()
+	{
+		String str = new String();
+		current = first;
+
+		for(int k = 0; k < p; k++)
+		{
+			str += current.getPerson().toStringPretty() + "\n\n\n";
+		}
+
+		return str;
+	}
+
+	public void toFile()
+	{
+		current = first;
+		out.write("" + p);
+
+		for(int k = 0; k < p; k++)
+		{
+			out.write(current.getPerson().toString());
+		}
+	}
+
+	private class personNode
+	{
+		public personNode next;
+		player person;
+
+		public personNode()
+		{
+			next = null;
+			person = new player();
+		}
+
+		public personNode(player p)
+		{
+			person = p;
+			next = null;
+		}
+
+		public void setPerson(player p){person = p;}
+
+		public player getPerson(){return person;}
 	}
 }

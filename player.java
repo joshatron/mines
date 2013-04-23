@@ -67,6 +67,23 @@ public class player
 	public int getBest3(){return best3;}
 	public int getFavorite(){return favorite;}
 
+	public String toString()
+	{
+		return name + "," + played1 + "," + played2 + "," + played3 + "," + won + "," + best1 + "," + best2 + "," + best3 + "," + favorite;
+	}
+	public String toStringPretty()
+	{
+		String str = new String();
+
+		str += name + ":\n\n";
+		str += "Game 1-\n\tGames Played: " + played1 + "\n\tFastest Time: " + best1 + "\n";
+		str += "Game 2-\n\tGames Played: " + played2 + "\n\tFastest Time: " + best2 + "\n";
+		str += "Game 3-\n\tGames Played: " + played3 + "\n\tFastest Time: " + best3 + "\n";
+		str += "Totals:\n\tTotal Played: " + getPlayed() + "\n\tGames Won: " + won;
+
+		return str;
+	}
+
 	public void setName(String n){name = n;}
 	public void setWon(int w){won = w;}
 	public void setBest1(int b){best1 = b;}

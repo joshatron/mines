@@ -18,6 +18,7 @@ public class display extends Applet
 	Image gameBackBuffer, menuBackBuffer;
 	Graphics backg, backg2;
 	Font gridFont, menuFont, mineFont;
+	log stats;
 
 	public void init()
 	{
@@ -27,6 +28,7 @@ public class display extends Applet
 		isEnd = false;
 		didWin = false;
 		menu = true;
+
 		length = 40;
 		textOffsetx = 10;
 		textOffsety = 30;
@@ -185,7 +187,7 @@ public class display extends Applet
 		{
 			if(!menu)
 			{
-				if(c == 'r')
+				if(c == 'd')
 				{
 					if(length > 20)
 					{
@@ -199,7 +201,7 @@ public class display extends Applet
 						updateGameBackBuffer();
 					}
 				}
-				else if(c == 'e')
+				else if(c == 'u')
 				{
 					length += 10;
 					gFontSize += 10;
@@ -209,6 +211,10 @@ public class display extends Applet
 					backg.setColor(Color.white);
 					backg.fillRect(0, 0, width, height);
 					updateGameBackBuffer();
+				}
+				else if(c == 'n')
+				{
+					goToGame();
 				}
 				else if(c == 'q')
 				{
@@ -257,6 +263,8 @@ public class display extends Applet
 				}
 			}
 		}
+
+		//perform logging information
 	}
 
 	public void checkWin()
@@ -284,14 +292,17 @@ public class display extends Applet
 	public void goToMenu()
 	{
 		menu = true;
-		isEnd = false;
 		isFirst = true;
+		isEnd = false;
 		didWin = false;
 	}
 
 	public void goToGame()
 	{
 		menu = false;
+		isFirst = true;
+		isEnd = false;
+		didWin = false;
 		grid = new gridGeneration(gameMode);
 		rows = grid.getRows();
 		cols = grid.getCols();
@@ -482,14 +493,14 @@ public class display extends Applet
 			
 			if(didWin)
 			{
-				String win = "Congratulations!";
+				String win = "Congratulations, you won!";
 
 				backg.setColor(new Color(255, 69, 0));
 				backg.drawString(win + " " + go, x, y);
 			}
 			else
 			{
-				String lose = "Sorry, but you lost.";
+				String lose = "You have lost.";
 
 				backg.setColor(new Color(255, 69, 0));
 				backg.drawString(lose + " " + go, x, y);
