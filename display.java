@@ -201,7 +201,7 @@ public class display extends Applet
 						updateGameBackBuffer();
 					}
 				}
-				else if(c == 'u')
+				else if(c == 'i')
 				{
 					length += 10;
 					gFontSize += 10;
@@ -400,7 +400,7 @@ public class display extends Applet
 		backg.fillRect(0, 0, startx, starty + length);
 		backg.setColor(Color.red);
 		backg.setFont(mineFont);
-		backg.drawString("Mines:\n" + mines, 5, starty + length);
+		backg.drawString("Mines:\n" + mines, 5, starty + 25);
 		for(int k = startx; k - startx < rows * length; k += length)
 		{
 			for(int a = starty; a - starty < cols * length; a += length)
