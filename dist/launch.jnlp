@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jnlp href="launch.jnlp" spec="1.0+">
+    <information>
+        <title>mines</title>
+        <vendor>joshua</vendor>
+        <homepage href=""/>
+        <description>mines</description>
+        <description kind="short">mines</description>
+        
+        
+    </information>
+    <update check="always"/>
+    
+    <resources>
+        <j2se java-vm-args="-Djava.security.policy=applet.policy" version="1.6+"/>
+        <jar href="mines.jar" main="true"/>
+        
+        
+    </resources>
+    <applet-desc height="1000" main-class="mines.display" name="mines" width="1900">
+        
+    </applet-desc>
+</jnlp>

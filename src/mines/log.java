@@ -1,20 +1,22 @@
 /*
-    This class monitors game play and keeps statistics of games played.
-    It will keep track of games played, games won, best 3 times, and favorite configuration.
-    Each person will type their name for games and stats will individually be tracked.
-    All information will be stored in a file called stats.
-    format of file is:
-
-    number of players
-    name1,games played1,games played2,games played3,games won,best score1,best score2,best score3,number of favorite configuration
-    name2,games played1,games played2,games played3,games won,best score1,best score2,best score3,number of favorite configuration
-    name3,games played1,games played2,games played3,games won,best score1,best score2,best score3,number of favorite configuration
-    ...
-
-    The three groups of scores are each of the different game types in ascending order.
-    The worst time limit is 999 seconds.
-*/
-
+ * This class monitors game play and keeps statistics of games played.
+ * It will keep track of games played, games won, best 3 times, and favorite configuration.
+ * Each person will type their name for games and stats will individually be tracked.
+ * All information will be stored in a file called stats.
+ * format of file is:
+ *   number of players
+ *   name1,games played1,games played2,games played3,games won,
+ *   best score1,best score2,best score3,number of favorite configuration
+ *   name2,games played1,games played2,games played3,games won,
+ *   best score1,best score2,best score3,number of favorite configuration
+ *   name3,games played1,games played2,games played3,games won,
+ *   best score1,best score2,best score3,number of favorite configuration
+ *   ...
+ *
+ * The three groups of scores are each of the different game types in ascending order.
+ * The worst time limit is 999 seconds.
+ */
+package mines;
 import java.io.*;
 import java.util.*;
 

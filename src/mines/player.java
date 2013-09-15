@@ -1,8 +1,12 @@
 /*
-    This stores the information of one person for the minesweeper game.
-    It keeps track of name, games played, games won, best score in each game mode, and favorite game.
-    An array of these will be used by the log class.
-*/
+ * player.java
+ * by Joshua Leger
+ * This stores the information of one person for the minesweeper game.
+ * It keeps track of name, games played, games won, best score in each game mode,
+ * and favorite game.
+ * An array of these will be used by the log class.
+ */
+package mines;
 
 public class player
 {

@@ -1,8 +1,13 @@
 /*
-    This class displays the mines board.
-    It is a applet which uses a mouselistener to interact.
-*/
+ * display.java
+ * by Joshua Leger
+ * This class displays the mines board.
+ * It is a applet which uses a mouselistener to interact.
+ */
 
+//for timing use long System.nanoTime() for start and end and subtract
+
+package mines;
 import java.applet.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -11,8 +16,10 @@ public class display extends Applet
              implements MouseListener, MouseMotionListener, KeyListener
 {
     int[][] bottom, top;
-    int length, textOffsetx, textOffsety, startx, starty, mx, my, rows, cols, width, height, mines, gFontSize;
-    int gameMode, optionWidth, optionHeight, startX, startY, textOffsetX, textOffsetY, textHeight, mFontSize;
+    int length, textOffsetx, textOffsety, startx, starty;
+    int mx, my, rows, cols, width, height, mines, gFontSize;
+    int gameMode, optionWidth, optionHeight, startX, startY;
+    int textOffsetX, textOffsetY, textHeight, mFontSize;
     boolean isFirst, isEnd, menu, didWin;
     gridGeneration grid;
     Image gameBackBuffer, menuBackBuffer;

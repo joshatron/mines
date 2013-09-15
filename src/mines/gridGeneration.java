@@ -1,22 +1,23 @@
 /*
-    gridGeneration.java
-    by Joshua Leger
-    This class will create the grid to play mines from.
-    The output is a 2d array containing integers ranging from -1 to 8.
-    -1 represents a mine.
-    0 through 8 are constants representing number of mines surrounding;
-    The two types of input are a single input mode. The different modes are:
-        1- 8x8 with 10 mines
-        2- 16x16 with 40 mines
-        3- 30x16 with 99 mines
-    The other input contains 3 perameters:
-        the number of coloums
-        the number of rows
-        the number of mines
-    This second mode will return an empty array if too many mines are possible.
-    This should be created at the beginning of the game.
-    Call generateMines at the beginning of each match.
-*/
+ * gridGeneration.java
+ * by Joshua Leger
+ * This class will create the grid to play mines from.
+ * The output is a 2d array containing integers ranging from -1 to 8.
+ * -1 represents a mine.
+ * 0 through 8 are constants representing number of mines surrounding;
+ * The two types of input are a single input mode. The different modes are:
+ *    1- 8x8 with 10 mines
+ *    2- 16x16 with 40 mines
+ *    3- 30x16 with 99 mines
+ * The other input contains 3 perameters:
+ *    the number of coloums
+ *    the number of rows
+ *    the number of mines
+ * This second mode will return an empty array if too many mines are possible.
+ * This should be created at the beginning of the game.
+ * Call generateMines at the beginning of each match.
+ */
+package mines;
 import java.util.Random;
 
 public class gridGeneration
