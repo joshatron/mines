@@ -9,6 +9,7 @@ public class Main
     JFrame frame;
     Grid grid;
     Menu menu;
+    LogDisplay logDisplay;
 
     public static void main(String[] args)
     {
@@ -20,6 +21,7 @@ public class Main
         frame = new JFrame();
         grid = new Grid(1);
         menu = new Menu();
+        logDisplay = new LogDisplay();
         frame.add(menu);
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -31,11 +33,23 @@ public class Main
             @Override
             public void propertyChange(PropertyChangeEvent e)
             {
-                grid.resetGrid(Integer.parseInt(e.getNewValue().toString()));
-                frame.remove(menu);
-                frame.add(grid);
-                frame.pack();
-                frame.setLocationRelativeTo(null);
+                int choice = Integer.parseInt(e.getNewValue().toString());
+                if(choice != 4)
+                {
+                    grid.resetGrid(choice);
+                    frame.remove(menu);
+                    frame.add(grid);
+                    frame.pack();
+                    frame.setLocationRelativeTo(null);
+                }
+                else
+                {
+                    logDisplay.refresh();
+                    frame.remove(menu);
+                    frame.add(logDisplay);
+                    frame.pack();
+                    frame.setLocationRelativeTo(null);
+                }
             }
         });
 
@@ -45,6 +59,18 @@ public class Main
             public void propertyChange(PropertyChangeEvent e)
             {
                 frame.remove(grid);
+                frame.add(menu);
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+            }
+        });
+
+        logDisplay.addPropertyChangeListener(LogDisplay.EXIT, new PropertyChangeListener()
+        {
+            @Override
+            public void propertyChange(PropertyChangeEvent propertyChangeEvent)
+            {
+                frame.remove(logDisplay);
                 frame.add(menu);
                 frame.pack();
                 frame.setLocationRelativeTo(null);

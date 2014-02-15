@@ -1,166 +1,148 @@
-/*
- * This class monitors game play and keeps statistics of games played.
- * It will keep track of games played, games won, best 3 times, and favorite configuration.
- * Each person will type their name for games and stats will individually be tracked.
- * All information will be stored in a file called stats.
- * format of file is:
- *   number of players
- *   name1,games played1,games played2,games played3,games won,
- *   best score1,best score2,best score3,number of favorite configuration
- *   name2,games played1,games played2,games played3,games won,
- *   best score1,best score2,best score3,number of favorite configuration
- *   name3,games played1,games played2,games played3,games won,
- *   best score1,best score2,best score3,number of favorite configuration
- *   ...
- *
- * The three groups of scores are each of the different game types in ascending order.
- * The worst time limit is 999 seconds.
- */
 package mines;
+
 import java.io.*;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.StringTokenizer;
 
 public class Log
 {
-    BufferedReader in;
-    PrintWriter out;
+    private LinkedList<Player> players;
     String file;
-    String[] names;
-    int p;
-    personNode first, current, last;
+    int people;
 
-    public Log() throws IOException
+    public Log()
     {
         file = "stats.txt";
-        in = new BufferedReader(new FileReader(file));
-        p = Integer.parseInt(in.readLine());
-        first = new personNode();
-        current = first;
-        names = new String[p];
+        players = new LinkedList<Player>();
         readFile();
     }
 
-    public Log(String f) throws IOException
+    public Log(String file)
     {
-        file = f;
-        in = new BufferedReader(new FileReader(file));
-        p = Integer.parseInt(in.readLine());
-        first = new personNode();
-        current = first;
-        names = new String[p];
+        this.file = file;
+        players = new LinkedList<Player>();
         readFile();
     }
 
-    public void readFile() throws IOException
+    public void addGame(String name, int game, int time, boolean won)
     {
-        for(int k = 0; k < p; k++)
+        boolean found = false;
+        for(int k = 0; k < people; k++)
         {
-            String per = in.readLine();
-            StringTokenizer token = new StringTokenizer(per, ",");
-            String name = token.nextToken();
-            Player p1 = new Player(name,Integer.parseInt(token.nextToken()),Integer.parseInt(token.nextToken()),
-                           Integer.parseInt(token.nextToken()),Integer.parseInt(token.nextToken()),
-                           Integer.parseInt(token.nextToken()),Integer.parseInt(token.nextToken()),
-                           Integer.parseInt(token.nextToken()),Integer.parseInt(token.nextToken()));
-            names[k] = name;
-            current.setPerson(p1);
-            current.next = new personNode();
-            current = current.next;
+            if(players.get(k).getName().equals(name))
+            {
+                found = true;
+                players.get(k).addGame(game, time, won);
+                break;
+            }
         }
 
-        last = current;
+        if(!found)
+        {
+            Player temp = new Player(name);
+            temp.addGame(game, time, won);
+            players.add(temp);
+            people++;
+        }
+
+        writeFile();
     }
 
-    public void addStats(String name, int game, boolean won, int time)
+    public void clearLog()
     {
-        boolean hasName = false;
-        current = first;
-
-        System.out.println(p);
-        for(int k = 0; k < p && !hasName; k++)
+        try
         {
-            current = current.next;
-
-            if(names[k].equals(name))
-            {
-                hasName = true;
-            }
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file)));
+            out.write("0");
+            out.close();
         }
-
-        if(hasName)
-        {
-            Player p1 = current.getPerson();
-            p1.incP(game);
-            if(won)
-            {
-                p1.incWon();
-                p1.setBest(game, time);
-            }
-
-            current.setPerson(p1);
-        }
-        else
-        {
-            Player p1 = new Player();
-            p1.setName(name);
-            p1.incP(game);
-            if(won)
-            {
-                p1.incWon();
-                p1.setBest(game, time);
-            }
-            last.setPerson(p1);
-            last.next = new personNode();
-            last = last.next;
-            p++;
-        }
+        catch(Exception e){}
     }
 
-    public String toString()
+    public void refresh()
     {
-        String str = new String();
-        current = first;
+        players.clear();
+        readFile();
+    }
 
-        for(int k = 0; k < p; k++)
+    public String firstName()
+    {
+        if(people > 0)
         {
-            str += current.getPerson().toStringPretty() + "\n\n\n";
+            return players.get(0).getName();
+        }
+        return "";
+    }
+
+    private void readFile()
+    {
+        try
+        {
+            BufferedReader in = new BufferedReader(new FileReader(file));
+
+            try
+            {
+                people = Integer.parseInt(in.readLine());
+            }
+            catch(NumberFormatException e)
+            {
+                people = 0;
+            }
+
+            for(int k = 0; k < people; k++)
+            {
+                StringTokenizer token = new StringTokenizer(in.readLine(), ",");
+                String name = token.nextToken();
+                int[] played = {Integer.parseInt(token.nextToken()), Integer.parseInt(token.nextToken()),
+                                Integer.parseInt(token.nextToken())};
+                int[] won = {Integer.parseInt(token.nextToken()), Integer.parseInt(token.nextToken()),
+                             Integer.parseInt(token.nextToken())};
+                int[] best = {Integer.parseInt(token.nextToken()), Integer.parseInt(token.nextToken()),
+                              Integer.parseInt(token.nextToken())};
+                int[] average = {Integer.parseInt(token.nextToken()), Integer.parseInt(token.nextToken()),
+                                 Integer.parseInt(token.nextToken())};
+                players.add(new Player(name, played, won, best, average));
+            }
+        }
+        catch(FileNotFoundException e)
+        {
+            File file = new File(this.file);
+            try
+            {
+                file.createNewFile();
+            }
+            catch(IOException e2){}
+        }
+        catch(IOException e){}
+    }
+
+    private void writeFile()
+    {
+        try
+        {
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file)));
+            out.write("" + people + "\n");
+
+            for(int k = 0; k < people; k++)
+            {
+                Player temp = players.get(k);
+                out.write(temp.toString());
+            }
+
+            out.close();
+        }
+        catch(Exception e){}
+    }
+
+    public String toStringPretty()
+    {
+        String str = "";
+
+        for(int k = 0; k < people; k++)
+        {
+            str += players.get(k).toStringPretty();
         }
 
         return str;
-    }
-
-    public void toFile() throws IOException
-    {
-        out = new PrintWriter(new BufferedWriter(new FileWriter(file)));
-        current = first;
-        out.write("" + p);
-
-        for(int k = 0; k < p; k++)
-        {
-            System.out.println(current.getPerson().toString());
-            out.write(current.getPerson().toString());
-        }
-    }
-
-    private class personNode
-    {
-        public personNode next;
-        Player person;
-
-        public personNode()
-        {
-            next = null;
-            person = new Player();
-        }
-
-        public personNode(Player p)
-        {
-            person = p;
-            next = null;
-        }
-
-        public void setPerson(Player p){person = p;}
-
-        public Player getPerson(){return person;}
     }
 }

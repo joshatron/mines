@@ -2,21 +2,26 @@ package mines;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class Grid extends JLabel implements MouseListener
 {
     public static final String EXIT = "exit";
 
-    private int rows, cols, length, width, height, mines;
+    private int rows, cols, length, width, height, mines, gameMode;
     private int startx, starty, textOffsetx, textOffsety, gFontSize;
     private boolean isFirst, isEnd, didWin, exit;
     private int[][] top, bottom;
+    private long startTime, endTime;
     private Font gridFont;
     private GridGeneration grid;
+    private Log log;
+    String name;
 
     public Grid(int type)
     {
+        gameMode = type;
         if(type == 1)
         {
             rows = 8;
@@ -63,10 +68,14 @@ public class Grid extends JLabel implements MouseListener
         gridFont = new Font("Monospaced", Font.PLAIN, gFontSize); 
         grid = new GridGeneration(type);
         addMouseListener(this);
+
+        log = new Log();
+        name = log.firstName();
     }
 
     public void resetGrid(int type)
     {
+        gameMode = type;
         if(type == 1)
         {
             rows = 8;
@@ -116,14 +125,17 @@ public class Grid extends JLabel implements MouseListener
             }
             else
             {
+                endTime = System.currentTimeMillis();
                 if(didWin)
                 {
-                    JOptionPane.showMessageDialog(null, "Congrats! You won.");
+                    name = JOptionPane.showInputDialog("Congrats! You won in " + ((endTime - startTime) / 1000.)
+                                                       + "s\nName: ", name);
                 }
                 else
                 {
-                    JOptionPane.showMessageDialog(null, "Sorry, you lost.");
+                    name = JOptionPane.showInputDialog("Sorry, your lost.\nName: ", name);
                 }
+                log.addGame("Joshua", gameMode, (int)(endTime - startTime), didWin);
                 exit = true;
             }
         }
@@ -365,6 +377,7 @@ public class Grid extends JLabel implements MouseListener
                 top[row][col] = 0;
                 isFirst = false;
                 expandZeros();
+                startTime = System.currentTimeMillis();
             }
         }
         else
