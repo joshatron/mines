@@ -6,9 +6,11 @@ import java.awt.event.*;
 
 public class Grid extends JLabel implements MouseListener
 {
+    public static final String EXIT = "exit";
+
     private int rows, cols, length, width, height, mines;
     private int startx, starty, textOffsetx, textOffsety, gFontSize;
-    private boolean isFirst, isEnd, didWin;
+    private boolean isFirst, isEnd, didWin, exit;
     private int[][] top, bottom;
     private Font gridFont;
     private GridGeneration grid;
@@ -19,16 +21,19 @@ public class Grid extends JLabel implements MouseListener
         {
             rows = 8;
             cols = 8;
+            mines = 10;
         }
         else if(type == 2)
         {
             rows = 16;
             cols = 16;
+            mines = 40;
         }
         else
         {
             rows = 32;
             cols = 16;
+            mines = 99;
         }
 
         bottom = new int[rows][cols];
@@ -45,36 +50,83 @@ public class Grid extends JLabel implements MouseListener
         isFirst = true;
         isEnd = false;
         didWin = false;
-        mines = 100;
+        exit = false;
 
         length = 40;
         startx = 0;
-        starty = 0;
+        starty = 30;
         textOffsetx = 10;
         textOffsety = 30;
         gFontSize = 30;
-        width = rows * length;
-        height = cols * length;
+        width = rows * length + startx;
+        height = cols * length + starty;
         gridFont = new Font("Monospaced", Font.PLAIN, gFontSize); 
         grid = new GridGeneration(type);
         addMouseListener(this);
     }
 
-    public boolean atEnd()
+    public void resetGrid(int type)
+    {
+        if(type == 1)
+        {
+            rows = 8;
+            cols = 8;
+            mines = 10;
+        }
+        else if(type == 2)
+        {
+            rows = 16;
+            cols = 16;
+            mines = 40;
+        }
+        else
+        {
+            rows = 32;
+            cols = 16;
+            mines = 99;
+        }
+
+        bottom = new int[rows][cols];
+        top = new int[rows][cols];
+        for(int k = 0; k < rows; k++)
+        {
+            for(int a = 0; a < cols; a++)
+            {
+                bottom[k][a] = 1;
+                top[k][a] = 1;
+            }
+        }
+
+        isFirst = true;
+        isEnd = false;
+        didWin = false;
+        exit = false;
+        width = rows * length + startx;
+        height = cols * length + starty;
+        grid = new GridGeneration(type);
+    }
+
+    public void atEnd()
     {
         if(isEnd)
         {
-            if(didWin)
+            if(exit)
             {
-                JOptionPane.showMessageDialog(null, "Congrats! You won.");
+                firePropertyChange(EXIT, false, true);
             }
             else
             {
-                JOptionPane.showMessageDialog(null, "Sorry, you lost.");
+                if(didWin)
+                {
+                    JOptionPane.showMessageDialog(null, "Congrats! You won.");
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "Sorry, you lost.");
+                }
+                exit = true;
             }
-            return true;
         }
-        return false;
     }
 
     @Override
@@ -87,6 +139,13 @@ public class Grid extends JLabel implements MouseListener
     protected void paintComponent(Graphics backg)
     {
         super.paintComponent(backg);
+
+        backg.setColor(Color.DARK_GRAY);
+        backg.fillRect(0, 0, width, starty);
+
+        backg.setFont(gridFont);
+        backg.setColor(new Color(230, 230, 230));
+        backg.drawString("Mines:" + mines, 1, 25);
 
         for(int k = startx; k - startx < rows * length; k += length)
         {
@@ -348,6 +407,7 @@ public class Grid extends JLabel implements MouseListener
                 }
 
                 checkWin();
+                atEnd();
             }
         }
     

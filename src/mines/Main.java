@@ -31,9 +31,21 @@ public class Main
             @Override
             public void propertyChange(PropertyChangeEvent e)
             {
-                grid = new Grid(Integer.parseInt(e.getNewValue().toString()));
+                grid.resetGrid(Integer.parseInt(e.getNewValue().toString()));
                 frame.remove(menu);
                 frame.add(grid);
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+            }
+        });
+
+        grid.addPropertyChangeListener(Grid.EXIT, new PropertyChangeListener()
+        {
+            @Override
+            public void propertyChange(PropertyChangeEvent e)
+            {
+                frame.remove(grid);
+                frame.add(menu);
                 frame.pack();
                 frame.setLocationRelativeTo(null);
             }

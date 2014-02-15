@@ -42,7 +42,7 @@ public class GridGeneration
         else if(gameMode == 3)
         {
             cols = 16;
-            rows = 30;
+            rows = 32;
             mines = 99;
             grid = new int[rows][cols];
         }

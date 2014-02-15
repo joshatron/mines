@@ -67,7 +67,7 @@ public class Menu extends JPanel
     public void setChoice(int choice)
     {
         firePropertyChange("choice", this.choice, choice);
-        this.choice = choice;
+        this.choice = 0;
     }
     public void resetChoice(){choice = 0;}
 }
