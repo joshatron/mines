@@ -1,5 +1,5 @@
 /*
- * display.java
+ * Display.java
  * by Joshua Leger
  * This class displays the mines board.
  * It is a applet which uses a mouselistener to interact.
@@ -12,7 +12,7 @@ import java.applet.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class display extends Applet
+public class Display extends Applet
              implements MouseListener, MouseMotionListener, KeyListener
 {
     int[][] bottom, top;
@@ -21,11 +21,11 @@ public class display extends Applet
     int gameMode, optionWidth, optionHeight, startX, startY;
     int textOffsetX, textOffsetY, textHeight, mFontSize;
     boolean isFirst, isEnd, menu, didWin;
-    gridGeneration grid;
+    GridGeneration grid;
     Image gameBackBuffer, menuBackBuffer;
     Graphics backg, backg2;
     Font gridFont, menuFont, mineFont;
-    log stats;
+    Log stats;
 
     public void init()
     {
@@ -310,7 +310,7 @@ public class display extends Applet
         isFirst = true;
         isEnd = false;
         didWin = false;
-        grid = new gridGeneration(gameMode);
+        grid = new GridGeneration(gameMode);
         rows = grid.getRows();
         cols = grid.getCols();
         mines = grid.getMines();

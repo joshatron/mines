@@ -1,5 +1,5 @@
 /*
- * player.java
+ * Player.java
  * by Joshua Leger
  * This stores the information of one person for the minesweeper game.
  * It keeps track of name, games played, games won, best score in each game mode,
@@ -8,13 +8,13 @@
  */
 package mines;
 
-public class player
+public class Player
 {
     String name;
     int won, favorite;
     int[] played, best;
 
-    public player()
+    public Player()
     {
         name = "";
         won = favorite = 0;
@@ -28,7 +28,7 @@ public class player
         best[2] = 999;
     }
     
-    public player(String n, int p1, int p2, int p3, int w, int b1, int b2, int b3, int f)
+    public Player(String n, int p1, int p2, int p3, int w, int b1, int b2, int b3, int f)
     {
         name = n;
         won = w;

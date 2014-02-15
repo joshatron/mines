@@ -20,7 +20,7 @@ package mines;
 import java.io.*;
 import java.util.*;
 
-public class log
+public class Log
 {
     BufferedReader in;
     PrintWriter out;
@@ -29,7 +29,7 @@ public class log
     int p;
     personNode first, current, last;
 
-    public log() throws IOException
+    public Log() throws IOException
     {
         file = "stats.txt";
         in = new BufferedReader(new FileReader(file));
@@ -40,7 +40,7 @@ public class log
         readFile();
     }
 
-    public log(String f) throws IOException
+    public Log(String f) throws IOException
     {
         file = f;
         in = new BufferedReader(new FileReader(file));
@@ -58,7 +58,7 @@ public class log
             String per = in.readLine();
             StringTokenizer token = new StringTokenizer(per, ",");
             String name = token.nextToken();
-            player p1 = new player(name,Integer.parseInt(token.nextToken()),Integer.parseInt(token.nextToken()),
+            Player p1 = new Player(name,Integer.parseInt(token.nextToken()),Integer.parseInt(token.nextToken()),
                            Integer.parseInt(token.nextToken()),Integer.parseInt(token.nextToken()),
                            Integer.parseInt(token.nextToken()),Integer.parseInt(token.nextToken()),
                            Integer.parseInt(token.nextToken()),Integer.parseInt(token.nextToken()));
@@ -89,7 +89,7 @@ public class log
 
         if(hasName)
         {
-            player p1 = current.getPerson();
+            Player p1 = current.getPerson();
             p1.incP(game);
             if(won)
             {
@@ -101,7 +101,7 @@ public class log
         }
         else
         {
-            player p1 = new player();
+            Player p1 = new Player();
             p1.setName(name);
             p1.incP(game);
             if(won)
@@ -145,22 +145,22 @@ public class log
     private class personNode
     {
         public personNode next;
-        player person;
+        Player person;
 
         public personNode()
         {
             next = null;
-            person = new player();
+            person = new Player();
         }
 
-        public personNode(player p)
+        public personNode(Player p)
         {
             person = p;
             next = null;
         }
 
-        public void setPerson(player p){person = p;}
+        public void setPerson(Player p){person = p;}
 
-        public player getPerson(){return person;}
+        public Player getPerson(){return person;}
     }
 }

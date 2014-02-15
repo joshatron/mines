@@ -1,5 +1,5 @@
 /*
- * gridGeneration.java
+ * GridGeneration.java
  * by Joshua Leger
  * This class will create the grid to play mines from.
  * The output is a 2d array containing integers ranging from -1 to 8.
@@ -20,12 +20,12 @@
 package mines;
 import java.util.Random;
 
-public class gridGeneration
+public class GridGeneration
 {
     private int[][] grid;
     private int cols, rows, mines;
 
-    public gridGeneration(int gameMode)
+    public GridGeneration(int gameMode)
     {
         if(gameMode == 1)
         {
@@ -53,7 +53,7 @@ public class gridGeneration
         }
     }
 
-    public gridGeneration(int c, int r, int m)
+    public GridGeneration(int c, int r, int m)
     {
         int boxes = r * c;
         if(m + 9 >= boxes || c == 0 || r == 0 || m == 0)
