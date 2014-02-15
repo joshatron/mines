@@ -1,9 +1,15 @@
 package mines;
 
 import javax.swing.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 public class Main
 {
+    JFrame frame;
+    Grid grid;
+    Menu menu;
+
     public static void main(String[] args)
     {
         new Main().go();
@@ -11,36 +17,26 @@ public class Main
 
     public void go()
     {
-        JFrame frame = new JFrame();
-        Grid grid = new Grid(1);
-        Menu menu = new Menu();
+        frame = new JFrame();
+        grid = new Grid(1);
+        menu = new Menu();
         frame.add(menu);
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
-        boolean done = false;
-        boolean menuBool = true;
 
-        while(!done)
+        menu.addPropertyChangeListener(menu.CHOICE, new PropertyChangeListener()
         {
-            if(menuBool)
+            @Override
+            public void propertyChange(PropertyChangeEvent e)
             {
-                if(menu.getChoice() != 0)
-                {
-                    System.out.println("" + menu.getChoice());
-                    grid = new Grid(menu.getChoice());
-                    menu.resetChoice();
-                    frame.add(grid);
-                }
+                grid = new Grid(Integer.parseInt(e.getNewValue().toString()));
+                frame.remove(menu);
+                frame.add(grid);
+                frame.pack();
+                frame.setLocationRelativeTo(null);
             }
-            else
-            {
-                if(grid.atEnd())
-                {
-                    frame.add(menu);
-                }
-            }
-        }
+        });
     }
 }

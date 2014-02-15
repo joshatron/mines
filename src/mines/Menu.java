@@ -2,19 +2,23 @@ package mines;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * @author joshua
  */
 public class Menu extends JPanel
 {
+    public static final String CHOICE = "choice";
+
     private JButton m1, m2, m3;
-    private int width, height, widthOne, heightOne, choice;
+    private int width, height, widthOne, heightOne;
+    private int choice;
 
     public Menu()
     {
-        choice = 0;
+        setChoice(0);
         widthOne = 250;
         heightOne = 150;
         width = widthOne * 2;
@@ -34,21 +38,21 @@ public class Menu extends JPanel
             @Override 
             public void actionPerformed(ActionEvent e)
             {
-                choice = 1;
+                setChoice(1);
             }
         }); 
         m2.addActionListener(new ActionListener(){
             @Override 
             public void actionPerformed(ActionEvent e)
             {
-                choice = 2;
+                setChoice(2);
             }
         }); 
         m3.addActionListener(new ActionListener(){
             @Override 
             public void actionPerformed(ActionEvent e)
             {
-                choice = 3;
+                setChoice(3);
             }
         }); 
     }
@@ -59,13 +63,11 @@ public class Menu extends JPanel
         return new Dimension(width, height);
     }
 
-    public int getChoice()
+    public int getChoice(){return choice;}
+    public void setChoice(int choice)
     {
-        return choice;
+        firePropertyChange("choice", this.choice, choice);
+        this.choice = choice;
     }
-
-    public void resetChoice()
-    {
-        choice = 0;
-    }
+    public void resetChoice(){choice = 0;}
 }

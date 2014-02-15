@@ -2,32 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f2deea57-91f0-404b-bdc5-8e58a5392a90" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/applet.policy" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/built-jar.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/mines/display.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/manifest.mf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/README.TXT" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/launch.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/launch.jnlp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/mines.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/manifest.mf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/master-applet.jnlp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/nbproject/build-impl.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/nbproject/configs/JWS_generated.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/nbproject/genfiles.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/nbproject/jnlp-impl.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/nbproject/private/config.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/nbproject/private/private.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/nbproject/private/private.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/nbproject/project.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/nbproject/project.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/preview-applet.html" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/mines/display.java" afterPath="$PROJECT_DIR$/src/mines/Display.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/mines/grid.java" afterPath="$PROJECT_DIR$/src/mines/Grid.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/mines/gridGeneration.java" afterPath="$PROJECT_DIR$/src/mines/GridGeneration.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/mines/log.java" afterPath="$PROJECT_DIR$/src/mines/Log.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/mines/player.java" afterPath="$PROJECT_DIR$/src/mines/Player.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/mines/display.html" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mines/Main.java" afterPath="$PROJECT_DIR$/src/mines/Main.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mines/Menu.java" afterPath="$PROJECT_DIR$/src/mines/Menu.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="mines.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -94,16 +72,38 @@
       <file leaf-file-name="Menu.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/mines/Menu.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="13" selection-start="122" selection-end="122" vertical-scroll-proportion="0.0" vertical-offset="226" max-vertical-offset="954">
-              <folding />
+            <state line="68" column="55" selection-start="1808" selection-end="1808" vertical-scroll-proportion="0.0" vertical-offset="712" max-vertical-offset="1404">
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#976#1143#0" expanded="true" />
+                <element signature="e#1132#1133#0" expanded="true" />
+                <element signature="e#1176#1343#0" expanded="true" />
+                <element signature="e#1332#1333#0" expanded="true" />
+                <element signature="e#1376#1543#0" expanded="true" />
+                <element signature="e#1532#1533#0" expanded="true" />
+                <element signature="method#getChoice#0;class#Menu#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Main.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Main.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/mines/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="13" selection-start="530" selection-end="530" vertical-scroll-proportion="0.2862191" vertical-offset="270" max-vertical-offset="918">
+            <state line="13" column="4" selection-start="236" selection-end="236" vertical-scroll-proportion="0.0" vertical-offset="190" max-vertical-offset="846">
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#619#1008#0" expanded="true" />
+                <element signature="e#997#998#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Grid.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/mines/Grid.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="6" column="13" selection-start="96" selection-end="96" vertical-scroll-proportion="0.13019891" vertical-offset="0" max-vertical-offset="6642">
               <folding />
             </state>
           </provider>
@@ -122,6 +122,7 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
+        <option value="$PROJECT_DIR$/src/mines/Menu.java" />
         <option value="$PROJECT_DIR$/src/mines/Main.java" />
       </list>
     </option>
@@ -208,15 +209,19 @@
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="recentsLimit" value="5" />
     <property name="dynamic.classpath" value="false" />
+    <property name="OverrideImplement.combined" value="true" />
+    <property name="OverrideImplement.overriding.sorted" value="false" />
+    <property name="restartRequiresConfirmation" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/mines/display.html" />
   </component>
   <component name="RunManager" selected="Application.Main">
     <configuration default="false" name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="mines.Main" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
@@ -289,15 +294,15 @@
     </configuration>
     <configuration default="true" type="Applet" factoryName="Applet">
       <module name="" />
-      <option name="MAIN_CLASS_NAME" />
+      <option name="MAIN_CLASS_NAME" value="mines.Display" />
       <option name="HTML_FILE_NAME" />
       <option name="HTML_USED" value="false" />
       <option name="WIDTH" value="400" />
       <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="POLICY_FILE" value="file://$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <option name="VM_PARAMETERS" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -353,8 +358,24 @@
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
       <method />
     </configuration>
-    <list size="1">
-      <item index="0" class="java.lang.String" itemvalue="Application.Main" />
+    <configuration default="false" name="Applet" type="Applet" factoryName="Applet" singleton="true">
+      <module name="mines" />
+      <option name="MAIN_CLASS_NAME" value="mines.Display" />
+      <option name="HTML_FILE_NAME" value="$PROJECT_DIR$/src/mines/display.html" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="1500" />
+      <option name="HEIGHT" value="750" />
+      <option name="POLICY_FILE" value="file://$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <list size="2">
+      <item index="0" class="java.lang.String" itemvalue="Applet.Applet" />
+      <item index="1" class="java.lang.String" itemvalue="Application.Main" />
     </list>
     <recent_temporary>
       <list size="1">
@@ -386,7 +407,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32885906" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -425,13 +446,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/mines/Menu.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="13" selection-start="122" selection-end="122" vertical-scroll-proportion="0.0" vertical-offset="126" max-vertical-offset="954">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mines.iml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="566">
@@ -439,9 +453,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/mines/Menu.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="68" column="55" selection-start="1808" selection-end="1808" vertical-scroll-proportion="0.0" vertical-offset="712" max-vertical-offset="1404">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#976#1143#0" expanded="true" />
+            <element signature="e#1132#1133#0" expanded="true" />
+            <element signature="e#1176#1343#0" expanded="true" />
+            <element signature="e#1332#1333#0" expanded="true" />
+            <element signature="e#1376#1543#0" expanded="true" />
+            <element signature="e#1532#1533#0" expanded="true" />
+            <element signature="method#getChoice#0;class#Menu#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/mines/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="13" selection-start="530" selection-end="530" vertical-scroll-proportion="0.2862191" vertical-offset="270" max-vertical-offset="918">
+        <state line="13" column="4" selection-start="236" selection-end="236" vertical-scroll-proportion="0.0" vertical-offset="190" max-vertical-offset="846">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#619#1008#0" expanded="true" />
+            <element signature="e#997#998#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mines/Grid.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="13" selection-start="96" selection-end="96" vertical-scroll-proportion="0.13019891" vertical-offset="0" max-vertical-offset="6642">
           <folding />
         </state>
       </provider>
