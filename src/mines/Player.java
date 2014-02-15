@@ -35,6 +35,10 @@ public class Player
 
     public void addGame(int game, int time, boolean won)
     {
+        if(time > MAX)
+        {
+            time = MAX;
+        }
         game--;
         played[game]++;
         if(won)
